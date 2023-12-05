@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Travel Weather Companion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./Assets/CSS/styling.css">
 </head>
 <body>
-    
+    <section class="hero is-black is-fullheight"  style="background-image: url(http://orig14.deviantart.net/7584/f/2015/181/2/7/flat_mountains_landscape_by_ggiuliafilippini-d8zdbco.jpg)">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+
+        </div>
+      
+        <!-- Hero content: will be in the middle -->
+        <div class="hero-body">
+            
+          <div class="container has-text-centered">
+            <p class="title has-text-black is-size-1">
+              Travel Weather Companion
+            </p>
+            <p class="subtitle has-text-black">
+              "You don't need a weatherman to know which way the wind blows." -Bob Dylan
+            </p>
+          </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-4">
+                <p>City</p>
+                <input class="input is-rounded" type="text" placeholder="Enter Your City Here">
+                <button class="button is-link is-medium">Search</button>  
+            </div>
+            <div class="tile">
+              <div id="results">
+            </div>
+          </div>
+          <div class="tile is-4"></div>
+
 </body>
 </html>
