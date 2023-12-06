@@ -1,7 +1,15 @@
 :root {
-    margin: 10px;
+    --purple: #2b2a4c;
+    --red: #B31312;
+    --peach: #EA906C;
+    --sand: #EEE2DE;
+    margin: 0px;
 }
 
-.custom-title {
-    color: black;
+#maintitle {
+    color: var(--purple);
+}
+
+#subtitle {
+    color: var(--purple);
 }

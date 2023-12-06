@@ -1,36 +1,60 @@
- // Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
- const apiKey = '79346457f41a36e5addd987bba5ca442';
- const city = 'Miami';  // Replace with the name of your city
- const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+const apiKey = '79346457f41a36e5addd987bba5ca442';
+const baseUrl = 'https://api.openweathermap.org/data/2.5';
+const endpoint = 'forecast';
 
- // Function to convert temperature from Kelvin to Celsius
- function kelvinToCelsius(kelvin) {
-     return (kelvin - 273.15).toFixed(1);
- }
+function searchWeather() {
+    const cityInput = document.getElementById('cityInput').value;
+    const weatherInfo = document.getElementById('weatherInfo');
+    const forecast = document.getElementById('forecast');
+    const searchButton = document.getElementById('searchButton');
 
- // Fetch data from OpenWeatherMap API
- fetch(apiUrl)
-     .then(response => response.json())
-     .then(data => {
-         const forecastContainer = document.getElementById('forecast-container');
+    // Use fetch to get current weather
+    fetch(`${baseUrl}/weather?q=${cityInput}&appid=${apiKey}&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+            // Handle weather data and update weatherInfo div
+            // You can access data.main.temp, data.weather, etc.
+            weatherInfo.innerHTML = `<p>Current temperature: ${data.main.temp}°C</p>`;
+        })
+        .catch(error => {
+            console.error('Error fetching current weather:', error);
+            weatherInfo.innerHTML = '<p>Error fetching weather data</p>';
+        });
 
-         // Extract the 5-day forecast data
-         const forecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+    // Use fetch to get 5-day forecast
+    fetch(`${baseUrl}/${endpoint}?q=${cityInput}&appid=${apiKey}&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+            // Handle forecast data and update forecast div
+            // You can access data.list for individual forecast entries
+            forecast.innerHTML = '<p>5-day forecast:</p>';
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching forecast:', error);
+            forecast.innerHTML = '<p>Error fetching forecast data</p>';
+        });
 
-         // Display each day's forecast
-         forecasts.forEach(forecast => {
-             const date = new Date(forecast.dt_txt);
-             const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
-             const temperature = kelvinToCelsius(forecast.main.temp);
+    // Store previous searches using localStorage
+    const previousSearches = JSON.parse(localStorage.getItem('previousSearches')) || [];
+    previousSearches.push(cityInput);
+    localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
 
-             const dayElement = document.createElement('div');
-             dayElement.classList.add('day');
-             dayElement.innerHTML = `
-                 <h3>${dayOfWeek}</h3>
-                 <p>${temperature} °C</p>
-             `;
+    // Update previous searches div
+    displayPreviousSearches();
+}
 
-             forecastContainer.appendChild(dayElement);
-         });
-     })
-     .catch(error => console.error('Error fetching data:', error));
+function displayPreviousSearches() {
+    const previousSearches = JSON.parse(localStorage.getItem('previousSearches')) || [];
+    const previousSearchesDiv = document.getElementById('previousSearches');
+    previousSearchesDiv.innerHTML = '<p>Previous Searches:</p>';
+    
+    previousSearches.forEach(search => {
+        previousSearchesDiv.innerHTML += `<p>${search}</p>`;
+    });
+}
+
+// Initial display of previous searches
+displayPreviousSearches();
+
+searchButton.addEventListener('click', searchWeather);
