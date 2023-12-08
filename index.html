@@ -23,7 +23,7 @@
             <div class="buttons">
               <a class="github-button" href="https://github.com/RecceRaven"
                 data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
-                aria-label="Follow @RecceRaven on GitHub">Follow @RecceRaven</a>
+                aria-label="Follow @RecceRaven on GitHub">@RecceRaven on GitHub</a>
             </div>
           </div>
         </div>
@@ -40,17 +40,21 @@
         </p>
       </div>
     </div>
-    <div class="tile is-ancestor is-centered">
-      <div class="tile is-4">
-        <input class="input is-rounded" type="text" id="cityInput" placeholder="Enter city">
-      </div>
-      <div class="control">
-        <button class="button is-info is-rounded" id="searchButton">Search</button>
+    <div class="section">
+      <div class="columns">
+        <div class="column is-4"></div>
+        <div class="column is-4">
+          <input class="input is-rounded" type="text" id="cityInput" placeholder="Enter city">
+        </div>
+        <div class="control column is-4">
+          <button class="button is-rounded" id="searchButton">Search</button>
+        </div>
       </div>
     </div>
-    <div id="weatherInfo" class="tile is-ancestor p-auto"></div>
-    <div id="forecast" class="tile is-parent p-auto"></div>
-    <div id="previousSearches" class="tile is-child p-auto"></div>
+    <div class="columns">
+      <div id="previousSearches" class="column is-4"></div>
+      <div id="weatherInfo" class="column is-4"></div>
+      <div id="forecast" class="column is-4"></div>
     </div>
   </section>
   <script src="https://openweathermap.org/data/2.5/weather"></script>
@@ -59,17 +63,3 @@
 </body>
 
 </html>
-
-
-
-<!-- Hero content: will be in the middle -->
-
-<div class="tile">
-  <div id="results">
-  </div>
-</div>
-<div class="tile is-4"></div>
-
-
-</div>
-</section>
