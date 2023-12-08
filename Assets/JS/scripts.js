@@ -3,20 +3,26 @@ const baseUrl = 'https://api.openweathermap.org/data/2.5';
 const endpoint = 'forecast';
 
 document.addEventListener('DOMContentLoaded', function () {
+    const searchButton = document.getElementById('searchButton');
+    const cityInput = document.getElementById('cityInput');
+    const weatherInfo = document.getElementById('weatherInfo');
+    const forecast = document.getElementById('forecast');
 
-    function searchWeather() {
-        const cityInput = document.getElementById('cityInput').value;
-        const weatherInfo = document.getElementById('weatherInfo');
-        const forecast = document.getElementById('forecast');
-        const searchButton = document.getElementById('searchButton');
+    function searchWeather(city) {
+        const cityName = city.trim();
 
-        // Use fetch to get current weather
-        fetch(`${baseUrl}/weather?q=${cityInput}&appid=${apiKey}&units=metric`)
+        if (!cityName) {
+            alert('Please enter a city name');
+            return;
+        }
+
+        fetch(`${baseUrl}/weather?q=${cityName}&appid=${apiKey}&units=metric`)
             .then(response => response.json())
             .then(data => {
                 // Handle weather data and update weatherInfo div
-                // You can access data.main.temp, data.weather, etc.
-                weatherInfo.innerHTML = `<p>Current temperature: ${data.main.temp}°C <br> Feels like ${data.main.feels_like}°C</p>`;
+                weatherInfo.innerHTML = `<p>Current temperature: ${data.main.temp}°C <br> Feels like: ${data.main.feels_like}°C</p>`;
+                // Call saveSearch after successful weather data retrieval
+                saveSearch(cityName);
             })
             .catch(error => {
                 console.error('Error fetching current weather:', error);
@@ -24,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
         // Use fetch to get 5-day forecast
-        fetch(`${baseUrl}/${endpoint}?q=${cityInput}&appid=${apiKey}&units=metric`)
+        fetch(`${baseUrl}/${endpoint}?q=${cityName}&appid=${apiKey}&units=metric`)
             .then(response => response.json())
             .then(data => {
                 // Handle forecast data and update forecast div
@@ -43,20 +49,20 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Function to save a search to localStorage
-    function saveSearch(cityInput) {
+    function saveSearch(city) {
         const previousSearches = JSON.parse(localStorage.getItem('previousSearches')) || [];
 
         // Keep only the last 5 searches
-        previousSearches.push(cityInput);
+        previousSearches.push(city);
         if (previousSearches.length > 5) {
-            previousSearches.shift(); // Remove the oldest search
+            previousSearches.shift();
         }
 
         localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
 
         // Update previous searches div
         displayPreviousSearches();
+        console.log('Saved searches:', previousSearches);
     }
 
     // Function to display previous searches in the UI
@@ -68,11 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
         previousSearches.forEach((search, index) => {
             // Create a link for each search
             const link = document.createElement('a');
-            link.href = '#'; // You can set a link to perform a specific action if needed
+
             link.textContent = search;
-            link.addEventListener('click', () => {
-                // Handle the click event (e.g., perform a new search with the selected city)
-                // For now, you can just log the selected city to the console
+            link.href = '#';
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent the default link behavior
+                cityInput.value = search; // Set the input field value to the clicked city
+                searchWeather(search);
                 console.log(`Clicked on search: ${search}`);
             });
 
@@ -89,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial display of previous searches
     displayPreviousSearches();
 
-    // Your JavaScript code here
-    searchButton.addEventListener('click', searchWeather);
+    // Attach event listener without parentheses
+    searchButton.addEventListener('click', function () {
+        searchWeather(cityInput.value);
+    });
 });

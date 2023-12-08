@@ -8,10 +8,14 @@
 
 #maintitle {
     color: var(--purple);
+    font-family: 'Oswald', sans-serif;
+    font-size: 80px;
 }
 
 #subtitle {
     color: var(--purple);
+    font-family: 'Caveat', cursive;
+    font-size: 50px;
 }
 
 .input {
@@ -21,9 +25,27 @@
 
 .button {
     background-color: var(--red);
-    color: var(--sand)
+    color: var(--sand);
+    transition-duration: 200ms;
+}
+
+.button:hover {
+    background-color: var(--sand);
 }
 
 .columns {
     color: var(--sand);
+    font-family: 'Roboto', sans-serif;
+    transition-duration: 200ms;
+}
+
+.footer {
+    padding: 0rem 1.5rem 0rem;
+    background-color: black;
+    color: var(--sand);
+}
+
+#previousSearches a:hover {
+    color: #2b2a4c;
+
 }
