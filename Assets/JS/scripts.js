@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial display of previous searches
     displayPreviousSearches();
 
-    // Attach event listener without parentheses
+    // Attach event listener
     searchButton.addEventListener('click', function () {
         searchWeather(cityInput.value);
     });
