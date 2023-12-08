@@ -23,7 +23,7 @@ This application will be launched by following the link in the Additional Resour
 
 ## Additional Resources
 
-
+Live Application: https://recceraven.github.io/TravelWeather/
 
 ## Acknowledgements
 
