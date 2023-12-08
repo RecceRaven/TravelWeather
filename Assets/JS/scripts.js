@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 // Handle weather data and update weatherInfo div
-                weatherInfo.innerHTML = `<p>Current temperature: ${data.main.temp}°C <br> Feels like: ${data.main.feels_like}°C</p>`;
+                weatherInfo.innerHTML = `<p>Current temperature: ${data.main.temp}°C <br>Feels like: ${data.main.feels_like}°C <br>Humidity: ${data.main.humidity}<br>Wind Speed: ${data.wind.speed} km/hr </p>`;
                 // Call saveSearch after successful weather data retrieval
                 saveSearch(cityName);
             })
